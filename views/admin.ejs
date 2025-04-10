@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Page</title>
+</head>
+<body>
+    <style>body {font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;}</style>
+    <h1>Admin Page</h1>
+
+
+    <% if (locals.id) {%>
+        <p> URL Generate: http://localhost:4000/url/<%=locals.id%> </p>
+    <% } %>
+
+
+    <% if (locals.urls) { %>
+        <table>
+            <thead> 
+                <tr>
+                    <th>Sr.</th>
+                    <th>User</th>
+                    <th>OriginalURL</th>
+                    <th>ShortenURL</th>
+                    <th>Clicks</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% locals.urls.forEach((url, index) => { %>
+                    <tr>
+                        <td><%= index+1  %></td>
+                        <td><%= url.createdBy%></td>
+                        <td><%= url.longUrl  %></td>
+                        <td><%= url.urlCode  %></td>
+                        <td><%= url.clicks.length  %></td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    <% } %>
+</body>
+</html>

@@ -21,7 +21,7 @@ const signUpNewUser = async (req, res) => {
 
 }
 
-const signInNewUser = async (req, res) => {
+const loginNewUser = async (req, res) => {
     console.log(req.body);
     const {email, password} = req.body;
 
@@ -30,16 +30,16 @@ const signInNewUser = async (req, res) => {
     if (!user)
     {
         console.log("user not found");
-        res.render("signin.ejs", {error : "Something wrong with user name or password"});
+        res.render("Login.ejs", {error : "Something wrong with user name or password"});
     }
     else
     { 
-        const jwt = setUser(user);
-        res.cookie("jwt", jwt);
+        const token = setUser(user);
+        res.cookie("token", token);
         res.redirect("/");
     }
 }
 
 
 
-module.exports = {signUpNewUser, signInNewUser};
+module.exports = {signUpNewUser, loginNewUser};

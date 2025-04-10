@@ -4,7 +4,7 @@ const connectDB = require('./connection');
 const path = require('path');
 const urlRouter = require('./routes/url');
 const {userRouter} = require('./routes/user');
-const {authenticate, checkAuth} = require('./middlewear/auth');
+const {checkAutherization, restrictTo} = require('./middlewear/auth');
 const staticRoute = require ("./routes/staticRouter");
 const app = express();
 const {PORT, DBURL, DBName, SERVERURL} = require('./consts');
@@ -19,10 +19,11 @@ app.set("views", path.resolve('./views'));
 app.use(express.json());
 app.use(express.urlencoded({extended : false}));
 app.use(cookieParser());
+app.use(checkAutherization);
 
-app.use("/url", authenticate, urlRouter);
+app.use("/url", restrictTo(["Normal"]), urlRouter);
 app.use("/user", userRouter);
-app.use("/", checkAuth, staticRoute);
+app.use("/", staticRoute);
 
 
 

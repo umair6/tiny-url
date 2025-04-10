@@ -7,16 +7,16 @@
 </head>
 <body>
     <style>body {font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;}</style>
-    <h1>SignIn</h1>
+    <h1>Login Page</h1>
     <% if (locals.error) {%>
         <label style="color: red;"> <%= locals.error %> </label>
     <% }%>
-    <form method="post" action="/user/signin">
+    <form method="post" action="/user/login">
         <label>Email:</label>
         <input type="text" name="email" placeholder="Enter your Email" required>
         <label>Password:</label>
         <input type="text" name="password" placeholder="Enter your Password" required>
-        <button type="submit">SignIn</button>
+        <button type="submit">Login</button>
     </form>
 </body>
 </html>

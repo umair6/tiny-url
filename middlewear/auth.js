@@ -1,23 +1,23 @@
+
+
 const {getUser} = require("../service/auth")
-const authenticate = (req, res, next) => {
-    console.log("authenticating");
 
-    const jwt = req.cookies?.jwt;
-    if (!jwt) return res.redirect("/Signin");
-
-    const user = getUser(jwt);
-    if (!user) return res.redirect("/Signin");
-
-    console.log("authenticated");
-    req.user = user;
+function checkAutherization(req, res, next) {
+    
+    const authorisationHeader = req.cookies?.token;
+    req.user = null;
+    if (authorisationHeader == null) next();
+    const authToken = authorisationHeader;
+    req.user = getUser(authToken);;
     next();
 }
 
-const checkAuth = (req, res, next) => {
-    const jwt = req.cookies?.jwt;
-    const user = getUser(jwt);
-    req.user = user;
-    next();
-}
 
-module.exports = {authenticate, checkAuth};
+function restrictTo(roles = []) {
+    return (req, res, next) => {
+        if (req.user == null) return res.redirect("/Signin");
+        if (!roles.includes(req.user.role)) return res.render("Login.ejs", {error : "You are not allowed to access this page"});
+        next();
+    };
+}
+module.exports = {checkAutherization, restrictTo};

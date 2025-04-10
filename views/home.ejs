@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+</head>
+<body>
+    <style>body {font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;}</style>
+    <h1>URL SHORTNER</h1>
+
+
+    <% if (locals.id) {%>
+        <p> URL Generate: http://localhost:4000/url/<%=locals.id%> </p>
+    <% } %>
+
+    <form method="post" action="/url">
+        <label>Enter your Original URL:</label>
+        <input type="text" name="url" placeholder="Enter your URL here" required>
+        <button type="submit">Generate</button>
+    </form>
+
+
+    <% if (locals.urls) { %>
+        <table>
+            <thead> 
+                <tr>
+                    <th>Sr.</th>
+                    <th>OriginalURL</th>
+                    <th>ShortenURL</th>
+                    <th>Clicks</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% locals.urls.forEach((url, index) => { %>
+                    <tr>
+                        <td><%= index+1  %></td>
+                        <td><%= url.longUrl  %></td>
+                        <td><%= url.urlCode  %></td>
+                        <td><%= url.clicks.length  %></td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    <% } %>
+</body>
+</html>

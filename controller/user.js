@@ -1,7 +1,7 @@
 
 const {v4: uuidV4} = require("uuid");
 const{USER} = require("../models/user");
-const {setUser} = require("../service/auth");
+const {setUser} = require("../service/auth")
 
 
 const signUpNewUser = async (req, res) => {
@@ -34,12 +34,10 @@ const signInNewUser = async (req, res) => {
     }
     else
     { 
-        const sessionID = uuidV4();
-        setUser(sessionID, user);
-        res.cookie("uid", sessionID, {maxAge: 1000 * 120});
+        const jwt = setUser(user);
+        res.cookie("jwt", jwt);
         res.redirect("/");
     }
-
 }
 
 

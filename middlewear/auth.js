@@ -1,11 +1,11 @@
-const auth = require("../service/auth")
+const {getUser} = require("../service/auth")
 const authenticate = (req, res, next) => {
     console.log("authenticating");
 
-    const uid = req.cookies?.uid;
-    if (!uid) return res.redirect("/Signin");
+    const jwt = req.cookies?.jwt;
+    if (!jwt) return res.redirect("/Signin");
 
-    const user = auth.getUser(uid);
+    const user = getUser(jwt);
     if (!user) return res.redirect("/Signin");
 
     console.log("authenticated");
@@ -14,8 +14,8 @@ const authenticate = (req, res, next) => {
 }
 
 const checkAuth = (req, res, next) => {
-    const uid = req.cookies?.uid;
-    const user = auth.getUser(uid);
+    const jwt = req.cookies?.jwt;
+    const user = getUser(jwt);
     req.user = user;
     next();
 }

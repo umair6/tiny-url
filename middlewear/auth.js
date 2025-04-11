@@ -6,7 +6,10 @@ function checkAutherization(req, res, next) {
     
     const authorisationHeader = req.cookies?.token;
     req.user = null;
-    if (authorisationHeader == null) next();
+    if (authorisationHeader == null) {
+        next();
+        return;
+    }
     const authToken = authorisationHeader;
     req.user = getUser(authToken);;
     next();
@@ -15,7 +18,7 @@ function checkAutherization(req, res, next) {
 
 function restrictTo(roles = []) {
     return (req, res, next) => {
-        if (req.user == null) return res.redirect("/Signin");
+        if (req.user == null) return res.redirect("/Login");
         if (!roles.includes(req.user.role)) return res.render("Login.ejs", {error : "You are not allowed to access this page"});
         next();
     };

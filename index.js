@@ -3,7 +3,7 @@ const cookieParser = require("cookie-parser");
 const connectDB = require('./connection');
 const path = require('path');
 const urlRouter = require('./routes/url');
-const {userRouter} = require('./routes/user');
+const userRouter = require('./routes/user');
 const {checkAutherization, restrictTo} = require('./middlewear/auth');
 const staticRoute = require ("./routes/staticRouter");
 const app = express();
@@ -21,7 +21,7 @@ app.use(express.urlencoded({extended : false}));
 app.use(cookieParser());
 app.use(checkAutherization);
 
-app.use("/url", restrictTo(["Normal"]), urlRouter);
+app.use("/url", restrictTo(["Admin", "Normal"]), urlRouter);
 app.use("/user", userRouter);
 app.use("/", staticRoute);
 

@@ -13,10 +13,10 @@ const signUpNewUser = async (req, res) => {
     // redirect to login page
     if (!user)
     {
-        res.render("signup.ejs", {error : "Something went wrong"});
+        return res.render("signup.ejs", {error : "Something went wrong"});
     }
     else{
-        res.redirect("/SignIn");
+        return res.redirect("/Login");
     }
 
 }
@@ -30,16 +30,18 @@ const loginNewUser = async (req, res) => {
     if (!user)
     {
         console.log("user not found");
-        res.render("Login.ejs", {error : "Something wrong with user name or password"});
+        return res.render("Login.ejs", {error : "Something wrong with user name or password"});
     }
     else
     { 
+        console.log("user found");
+
         const token = setUser(user);
         res.cookie("token", token);
-        res.redirect("/");
+        return res.redirect("/");
     }
 }
 
 
 
-module.exports = {signUpNewUser, loginNewUser};
+module.exports = {loginNewUser, signUpNewUser};

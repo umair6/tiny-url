@@ -4,7 +4,7 @@ const {URL} = require("../models/url");
 const { restrictTo } = require('../middlewear/auth');
 
 
-staticRoute.route('/').get(async (req, res) => {
+staticRoute.get('/', restrictTo(["Normal"]) , async (req, res) => {
     const allURls = await URL.find({createdBy: req.user._id});
     return res.render('home.ejs', {urls : allURls});
 });
